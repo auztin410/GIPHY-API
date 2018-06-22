@@ -19,6 +19,7 @@
     <div class="container">
         <h1>GIPHY Search</h1>
 
+        
 
         <div id="buttons-view"></div>
 
@@ -35,6 +36,7 @@
         <div id="giphies-view"></div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
         <script type="text/javascript">
 
             var giphies = ["cat", "dog", "parrot", "pig"];
@@ -42,8 +44,10 @@
 
             function displayGiphyInfo() {
 
+                $("#giphies-view").empty();
+
                 var giphy = $(this).attr("data-name");
-                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + giphy + "&api_key=dc6zaTOxFJmzC";
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + giphy + "&api_key=dc6zaTOxFJmzC&limit=10";
 
 
                 $.ajax({
@@ -51,17 +55,19 @@
                     method: "GET"
                 }).then(function (response) {
 
-
+                    for (var i = 0; i < response.data.length; i++){
 
                     var newDiv = $("<div>");
-                    var rating = $("<p>Ratings: " + response.data.rating + "</p>");
-                    var image = $("<img>").attr("src", response.data.embed_url);
+                    var rating = $("<p>Ratings: " + response.data[i].rating + "</p>");
+                    var image = $("<img>").attr("src", response.data[i].images.preview_gif.url);
 
                     newDiv.append(rating, image);
 
-                    $("#giphies-view").html(newDiv);
+                    $("#giphies-view").append(newDiv);
 
                         console.log(response);
+                        
+                    }
                 });
 
             }
