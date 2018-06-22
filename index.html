@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>GIPHY API</title>
+    <style type="text/css">
+        button,
+        div,
+        form,
+        input {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>GIPHY Search</h1>
+
+
+        <div id="buttons-view"></div>
+
+        <form id="giphy-form">
+            <label for="giphy-input">Add a GIPHY!</label>
+            <input type="text" id="giphy-input">
+            <br>
+
+
+            <input id="add-giphy" type="submit" value="Add a GIPHY">
+        </form>
+
+
+        <div id="giphies-view"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+
+            var giphies = ["cat", "dog", "parrot", "pig"];
+
+
+            function displayGiphyInfo() {
+
+                var giphy = $(this).attr("data-name");
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + giphy + "&api_key=dc6zaTOxFJmzC";
+
+
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function (response) {
+
+
+
+                    var newDiv = $("<div>");
+                    var rating = $("<p>Ratings: " + response.data.rating + "</p>");
+                    var image = $("<img>").attr("src", response.data.embed_url);
+
+                    newDiv.append(rating, image);
+
+                    $("#giphies-view").html(newDiv);
+
+                        console.log(response);
+                });
+
+            }
+
+
+            function renderButtons() {
+
+
+                $("#buttons-view").empty();
+
+                for (var i = 0; i < giphies.length; i++) {
+
+
+                    var a = $("<button>");
+
+                    a.addClass("giphy");
+
+                    a.attr("data-name", giphies[i]);
+
+                    a.text(giphies[i]);
+
+                    $("#buttons-view").append(a);
+                }
+            }
+
+
+            $("#add-giphy").on("click", function (event) {
+                event.preventDefault();
+
+                var giphy = $("#giphy-input").val().trim();
+
+
+                giphies.push(giphy);
+
+
+                renderButtons();
+            });
+
+
+            $(document).on("click", ".giphy", displayGiphyInfo);
+
+
+            renderButtons();
+        </script>
+    </div>
+</body>
+
+</html>
