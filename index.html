@@ -13,6 +13,7 @@
         }
     </style>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
 </head>
 
 <body>
@@ -40,7 +41,7 @@
 
         <script type="text/javascript">
 
-            var giphies = ["mario", "sonic", "zelda", "donkey kong", "metroid", "fallout", "skyrim", "bioshock", "mass effect"];
+            var giphies = ["mario", "sonic", "zelda", "donkey kong", "metroid", "tetris", "pong", "starcraft", "warcraft", "diablo", "fallout", "skyrim", "bioshock", "mass effect", "cyberpunk 2077", "the witcher 3"];
 
 
             function displayGiphyInfo() {
@@ -59,7 +60,7 @@
                     for (var i = 0; i < response.data.length; i++) {
 
                         var newDiv = $("<div id='gifs'>");
-                        var rating = $("<p>Ratings: " + response.data[i].rating + "</p>");
+                        var rating = $("<p>Rating: " + response.data[i].rating + "</p>");
                         rating.attr("class", "ratings")
                         var image = $("<img>")
                         image.attr("src", response.data[i].images.fixed_height_still.url);
@@ -120,6 +121,10 @@
 
                 var giphy = $("#giphy-input").val().trim();
 
+
+                if (!giphy) {
+                    return
+                }
 
                 giphies.push(giphy);
 
