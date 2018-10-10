@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <title>GIPHY API</title>
-    <style type="text/css">
+    <style type='text/css'>
         button,
         div,
         form,
@@ -12,80 +12,80 @@
             margin: 10px;
         }
     </style>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+    <link rel='stylesheet' href='style.css'>
+    <link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
 </head>
 
 <body>
 
-    <div class="container">
+    <div class='container'>
         <h1>GIPHY Search</h1>
 
 
 
-        <div id="buttons-view"></div>
+        <div id='buttons-view'></div>
 
-        <form id="giphy-form">
-            <label for="giphy-input">Add a GIPHY!</label>
-            <input type="text" id="giphy-input">
+        <form id='giphy-form'>
+            <label for='giphy-input'>Add a GIPHY!</label>
+            <input type='text' id='giphy-input'>
             <br>
 
 
-            <input id="add-giphy" type="submit" value="Add a GIPHY">
+            <input id='add-giphy' type='submit' value='Add a GIPHY'>
         </form>
 
 
-        <div id="giphies-view"></div>
+        <div id='giphies-view'></div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 
-        <script type="text/javascript">
+        <script type='text/javascript'>
 
-            var giphies = ["mario", "sonic", "zelda", "donkey kong", "metroid", "tetris", "joust", "pong", "starcraft", "warcraft", "diablo", "fallout", "skyrim", "bioshock", "mass effect", "cyberpunk 2077", "the witcher 3"];
+            var giphies = ['mario', 'sonic', 'zelda', 'donkey kong', 'metroid', 'tetris', 'joust', 'pong', 'starcraft', 'warcraft', 'diablo', 'fallout', 'skyrim', 'bioshock', 'mass effect', 'cyberpunk 2077', 'the witcher 3'];
 
 
             function displayGiphyInfo() {
 
-                $("#giphies-view").empty();
+                $('#giphies-view').empty();
 
-                var giphy = $(this).attr("data-name");
-                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + giphy + "&api_key=dc6zaTOxFJmzC&limit=10";
+                var giphy = $(this).attr('data-name');
+                var queryURL = 'https://api.giphy.com/v1/gifs/search?q=' + giphy + '&api_key=dc6zaTOxFJmzC&limit=10';
 
 
                 $.ajax({
                     url: queryURL,
-                    method: "GET"
+                    method: 'GET'
                 }).then(function (response) {
 
                     for (var i = 0; i < response.data.length; i++) {
 
-                        var newDiv = $("<div id='gifs'>");
-                        var rating = $("<p>Rating: " + response.data[i].rating + "</p>");
-                        rating.attr("class", "ratings")
-                        var image = $("<img>")
-                        image.attr("src", response.data[i].images.fixed_height_still.url);
-                        image.attr("data-still", response.data[i].images.fixed_height_still.url);
-                        image.attr("data-animate", response.data[i].images.fixed_height.url);
-                        image.attr("data-state", "still")
-                        image.attr("class", "gif")
+                        var newDiv = $('<div id=' + gifs + '>');
+                        var rating = $('<p>Rating: ' + response.data[i].rating + '</p>');
+                        rating.attr('class', 'ratings')
+                        var image = $('<img>')
+                        image.attr('src', response.data[i].images.fixed_height_still.url);
+                        image.attr('data-still', response.data[i].images.fixed_height_still.url);
+                        image.attr('data-animate', response.data[i].images.fixed_height.url);
+                        image.attr('data-state', 'still')
+                        image.attr('class', 'gif')
 
-                        $(".gif").on("click", function () {
+                        $('.gif').on('click', function () {
 
-                            var state = $(this).attr("data-state");
+                            var state = $(this).attr('data-state');
 
-                            if (state === "still") {
-                                $(this).attr("src", $(this).attr("data-animate"));
-                                $(this).attr("data-state", "animate")
+                            if (state === 'still') {
+                                $(this).attr('src', $(this).attr('data-animate'));
+                                $(this).attr('data-state', 'animate')
                             }
-                            else if (state === "animate") {
-                                $(this).attr("src", $(this).attr("data-still"));
-                                $(this).attr("data-state", "still")
+                            else if (state === 'animate') {
+                                $(this).attr('src', $(this).attr('data-still'));
+                                $(this).attr('data-state', 'still')
                             }
                         })
 
                         newDiv.append(rating, image);
 
-                        $("#giphies-view").append(newDiv);
+                        $('#giphies-view').append(newDiv);
 
                         console.log(response);
 
@@ -98,28 +98,28 @@
             function renderButtons() {
 
 
-                $("#buttons-view").empty();
+                $('#buttons-view').empty();
 
                 for (var i = 0; i < giphies.length; i++) {
 
 
-                    var a = $("<button>");
+                    var a = $('<button>');
 
-                    a.addClass("giphy");
+                    a.addClass('giphy');
 
-                    a.attr("data-name", giphies[i]);
+                    a.attr('data-name', giphies[i]);
 
                     a.text(giphies[i]);
 
-                    $("#buttons-view").append(a);
+                    $('#buttons-view').append(a);
                 }
             }
 
 
-            $("#add-giphy").on("click", function (event) {
+            $('#add-giphy').on('click', function (event) {
                 event.preventDefault();
 
-                var giphy = $("#giphy-input").val().trim();
+                var giphy = $('#giphy-input').val().trim();
 
 
                 if (!giphy) {
@@ -133,7 +133,7 @@
             });
 
 
-            $(document).on("click", ".giphy", displayGiphyInfo);
+            $(document).on('click', '.giphy', displayGiphyInfo);
 
 
             renderButtons();
